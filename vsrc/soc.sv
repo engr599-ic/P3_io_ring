@@ -21,7 +21,9 @@ module SOC (
    logic [31:0] eoi32;
    assign eoi = eoi32[15:0];
 
-   picorv32 CORE (
+   picorv32 #(
+	.ENABLE_IRQ (1)
+   ) CORE (
    	.clk(clk), 
    	.resetn(rstn),
    	.trap(),

@@ -1,8 +1,8 @@
 module top(
-    input           CLK_PAD,
-    input           RSTN_PAD,
-    input [15:0]    IRQ_PAD,
-    output [15:0]   EOI_PAD
+    inout           CLK_PAD,
+    inout           RSTN_PAD,
+    inout [15:0]    IRQ_PAD,
+    inout [15:0]    EOI_PAD
      
 );
 
@@ -102,20 +102,20 @@ module gpio_input (
         .ENABLE_H(vddio),      // Enable input
         .HLD_H_N(vddio), // hold not
         
-        .SLOW('h0), // =1 for slow output slew
+        .SLOW(1'h0), // =1 for slow output slew
         .VTRIP_SEL(1'b0), //=0 for CMOS logic trip-point
         .INP_DIS(1'b0),       // input buffer disable 
         .DM({3'b001}),        // Input-only mode
         .HLD_OVR(1'b0), //hold override
 
         .OE_N(1'b1),          // Disable output
-        .OUT('h0), // no output
+        .OUT(1'h0), // no output
         .IN(FROM_PAD), // input 
 
         .IN_H(), // dont care
         .ENABLE_INP_H(vddio),
         
-        .IB_MODE_SEL(2'b00),
+        .IB_MODE_SEL(1'b0),
         .ENABLE_VDDIO(1'b1),
 
         .ENABLE_VDDA_H(vdda), // enable vdd hold 
@@ -158,7 +158,7 @@ module gpio_output (
         .ENABLE_H(vddio),      // Enable input
         .HLD_H_N(vddio), // hold not
         
-        .SLOW('h0), // =1 for slow output slew
+        .SLOW(1'h0), // =1 for slow output slew
         .VTRIP_SEL(1'b0), //=0 for CMOS logic trip-point
         .INP_DIS(1'b1),       // input buffer disable 
         .DM({3'b011}),        // Input-only mode
@@ -171,7 +171,7 @@ module gpio_output (
         .IN_H(), // dont care
         .ENABLE_INP_H(vddio),
         
-        .IB_MODE_SEL(2'b00),
+        .IB_MODE_SEL(1'b0),
         .ENABLE_VDDIO(1'b1),
 
         .ENABLE_VDDA_H(vdda), // enable vdd hold 
