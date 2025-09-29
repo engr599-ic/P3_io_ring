@@ -10,10 +10,14 @@ set MMMC_FILE ./mmmc.tcl
 
 set PDK_DIR /l/skywater-pdk/libraries/sky130_fd_pr/latest/
 set STDCELL_DIR /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/cells/
+set IO_DIR /l/skywater-pdk/libraries/sky130_fd_io/latest/cells
 set LIB_DIR /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/
 set TECH_LEF /l/skywater-pdk/libraries/sky130_fd_pr/latest/tech/sky130_fd_pr.tlef
 
-set ALL_LEFS [glob -nocomplain -type f $STDCELL_DIR/**/*.lef]
+set STDCELL_LEFS [glob -nocomplain -type f $STDCELL_DIR/**/*.lef]
+set IO_LEFS [glob -nocomplain -type f $IO_DIR/**/*.lef]
+
+set ALL_LEFS [list {*}$STDCELL_LEFS {*}$IO_LEFS]
 
 # Remove any .magic.lef files and the diode lefs.
 # .magic.lefs aren't supported by Cadence and the diode lefs are incorrect.
