@@ -1,4 +1,4 @@
-set TOP_MODULE SOC
+set TOP_MODULE top
 
 set HDL_FILES {
    ./vsrc/soc.sv
