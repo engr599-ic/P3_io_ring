@@ -1,15 +1,11 @@
 module SOC (
    input clk,
    input rstn,
-   
-   output wire [31:0] gpio_do,
-   output wire [31:0] gpio_oe,
-   output wire [31:0] gpio_ps,
-   output wire [31:0] gpio_is,
-   output wire [31:0] gpio_ds0,
-   output wire [31:0] gpio_ds1,
-   output wire [31:0] gpio_sr
-);
+  
+   input [15:0] irq,
+   output [15:0] eoi 
+
+   );
 
    logic rst;
    assign rst = ~rstn;
@@ -21,6 +17,9 @@ module SOC (
    logic [31:0] mem_wdata;
    logic [3:0] mem_wstrb;
    logic [31:0] mem_rdata;
+
+   logic [31:0] eoi32;
+   assign eoi = eoi32[15:0];
 
    picorv32 CORE (
    	.clk(clk), 
@@ -48,18 +47,20 @@ module SOC (
    	.pcpi_insn(),
    	.pcpi_rs1(),
    	.pcpi_rs2(),
-   	.pcpi_wr(),
-   	.pcpi_rd(),
-   	.pcpi_wait(),
-   	.pcpi_ready(),
+   	.pcpi_wr('h0),
+   	.pcpi_rd(32'h0),
+   	.pcpi_wait('h1),
+   	.pcpi_ready('h0),
+
    
    	// IRQ Interface
-   	.irq(),
-   	.eoi(),
+   	.irq( {16'h0, irq} ),
+   	.eoi( eoi32),
    
    	.trace_valid(),
    	.trace_data()
    );
+    
 
    sram_simple SRAM_TOP(
       .clk(clk),
