@@ -4,6 +4,7 @@ set HDL_FILES {
    ./vsrc/soc.sv
    ./vsrc/sram_simple.sv
    ./picorv32/picorv32.v
+   /home/skywater-pdk/libraries/sky130_fd_io/latest/cells/top_gpiov2/sky130_fd_io__top_gpiov2.blackbox.v
 }
 
 set MMMC_FILE ./mmmc.tcl
