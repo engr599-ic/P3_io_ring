@@ -1,6 +1,7 @@
 set TOP_MODULE top
 
 set HDL_FILES {
+   ./vsrc/top.sv
    ./vsrc/soc.sv
    ./vsrc/sram_simple.sv
    ./picorv32/picorv32.v
