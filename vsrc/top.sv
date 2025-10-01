@@ -221,7 +221,6 @@ generate
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio),
                 .DRNG_HVC(vddio),
-                .OGC_HVC(vssio)
             );
     end
 endgenerate
@@ -240,7 +239,6 @@ generate
             .VSSIO_Q(vssio),
             .VSSIO(vssio),
             .DRNG_HVC(vddio),
-            .OGC_HVC(vssio)
         );
     end
 endgenerate
@@ -258,7 +256,6 @@ generate
                 .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio),
-                .OGC_LVC(vssio),
                 .BREF_LVC(vssio),
                 .VREF_LVC(vssio)
             );
@@ -278,7 +275,6 @@ generate
                 .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio),
-                .OGC_LVC(vssio),
                 .BREF_LVC(vssio),
                 .VREF_LVC(vssio)
             );

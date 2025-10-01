@@ -5,6 +5,9 @@ read_db dbs/syn_opt.db/
 
 create_net -physical -name VPWR -power
 create_net -physical -name VGND -ground
+create_net -physical -name vddio -power
+create_net -physical -name vdda -power
+create_net -physical -name vddswitch -power
 
 # Enable OCV (On Chip Variation)
 # This takes into account process variation
