@@ -219,8 +219,7 @@ generate
                 .VSSA(vssa),
                 .VSSD(vssd),
                 .VSSIO_Q(vssio),
-                .VSSIO(vssio),
-                .DRNG_HVC(vddio),
+                .VSSIO(vssio)
             );
     end
 endgenerate
@@ -237,8 +236,7 @@ generate
             .VSSA(vssa),
             .VSSD(vssd),
             .VSSIO_Q(vssio),
-            .VSSIO(vssio),
-            .DRNG_HVC(vddio),
+            .VSSIO(vssio)
         );
     end
 endgenerate
@@ -255,9 +253,7 @@ generate
                 .VSSA(vssa),
                 .VSSD(vssd),
                 .VSSIO_Q(vssio),
-                .VSSIO(vssio),
-                .BREF_LVC(vssio),
-                .VREF_LVC(vssio)
+                .VSSIO(vssio)
             );
     end
 endgenerate
@@ -274,12 +270,59 @@ generate
                 .VSSA(vssa),
                 .VSSD(vssd),
                 .VSSIO_Q(vssio),
-                .VSSIO(vssio),
-                .BREF_LVC(vssio),
-                .VREF_LVC(vssio)
+                .VSSIO(vssio)
             );
     end
 endgenerate
+
+sky130_fd_io__corner_bus_overlay tl(
+                .VDDIO(vddio),
+                .VDDIO_Q(vddio),
+                .VDDA(vdda),
+                .VCCD(vccd),
+                .VSWITCH(vddio),
+                .VCCHIB(vddio),
+                .VSSA(vssa),
+                .VSSD(vssd),
+                .VSSIO_Q(vssio),
+                .VSSIO(vssio)
+);
+sky130_fd_io__corner_bus_overlay tr(
+                .VDDIO(vddio),
+                .VDDIO_Q(vddio),
+                .VDDA(vdda),
+                .VCCD(vccd),
+                .VSWITCH(vddio),
+                .VCCHIB(vddio),
+                .VSSA(vssa),
+                .VSSD(vssd),
+                .VSSIO_Q(vssio),
+                .VSSIO(vssio)
+);
+sky130_fd_io__corner_bus_overlay bl(
+                .VDDIO(vddio),
+                .VDDIO_Q(vddio),
+                .VDDA(vdda),
+                .VCCD(vccd),
+                .VSWITCH(vddio),
+                .VCCHIB(vddio),
+                .VSSA(vssa),
+                .VSSD(vssd),
+                .VSSIO_Q(vssio),
+                .VSSIO(vssio)
+);
+sky130_fd_io__corner_bus_overlay br(
+                .VDDIO(vddio),
+                .VDDIO_Q(vddio),
+                .VDDA(vdda),
+                .VCCD(vccd),
+                .VSWITCH(vddio),
+                .VCCHIB(vddio),
+                .VSSA(vssa),
+                .VSSD(vssd),
+                .VSSIO_Q(vssio),
+                .VSSIO(vssio)
+);
 
 endmodule
 
