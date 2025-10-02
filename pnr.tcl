@@ -29,11 +29,11 @@ read_floorplan top_with_power.fp
 connect_global_net VPWR -type pg_pin -pin_base_name VPWR -all
 connect_global_net VPWR -type net -net_base_name VPWR -all
 
-connect_global_net vccd -type pg_pin -pin_base_name VPWR -all
-connect_global_net vccd -type net -net_base_name VPWR -all
+#connect_global_net vccd -type pg_pin -pin_base_name VPWR -all
+#connect_global_net vccd -type net -net_base_name VPWR -all
 
-connect_global_net vssd -type pg_pin -pin_base_name VGND -all
-connect_global_net vssd -type net -net_base_name VGND -all
+#connect_global_net vssd -type pg_pin -pin_base_name VGND -all
+#connect_global_net vssd -type net -net_base_name VGND -all
 
 connect_global_net vddio -type pg_pin -pin_base_name vddio -all
 connect_global_net vddio -type net -net_base_name vddio -all
