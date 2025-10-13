@@ -95,7 +95,7 @@ module gpio_input (
 
     //per this figure: 
     //https://skywater-pdk.readthedocs.io/en/main/_images/sky130_fd_io__top_gpiov2.png
-    sky130_fd_io__top_gpiov2 input_pad0(
+    sky130_ef_io__gpiov2_pad_wrapped input_pad0(
 
         .PAD(PAD),
 
@@ -152,7 +152,7 @@ module gpio_output (
 
     //per this figure: 
     //https://skywater-pdk.readthedocs.io/en/main/_images/sky130_fd_io__top_gpiov2.png
-    sky130_fd_io__top_gpiov2 input_pad0(
+    sky130_ef_io__gpiov2_pad_wrapped input_pad0(
         .PAD(PAD),
 
         .ENABLE_H(vddio),      // Enable input
@@ -209,7 +209,7 @@ logic vddc;
 genvar i;
 generate
     for (i = 0; i < 4; i++) begin : vddio_pad
-        sky130_fd_io__overlay_vddio_hvc vddio_pad(
+        sky130_ef_io__vddio_hvc_pad vddio_pad(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
@@ -226,7 +226,7 @@ endgenerate
 
 generate
     for (i = 0; i < 4; i++) begin : vssio_pad 
-        sky130_fd_io__overlay_vssio_hvc vssio_pad(
+        sky130_ef_io__vssio_hvc_pad vssio_pad(
             .VDDIO(vddio),
             .VDDIO_Q(vddio),
             .VDDA(vdda),
@@ -243,7 +243,7 @@ endgenerate
 
 generate
     for (i = 0; i < 4; i++) begin : vccd_pad 
-        sky130_fd_io__overlay_vccd_hvc vccd_pad(
+        sky130_ef_io__vccd_hvc_pad vccd_pad(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
@@ -260,7 +260,7 @@ endgenerate
 
 generate
     for (i = 0; i < 4; i++) begin : vssd_pad 
-        sky130_fd_io__overlay_vssd_hvc vssd_pad(
+        sky130_ef_io__vssd_hvc_pad vssd_pad(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
@@ -275,7 +275,7 @@ generate
     end
 endgenerate
 
-sky130_fd_io__corner_bus_overlay tl(
+sky130_ef_io__corner_pad tl(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
@@ -287,7 +287,7 @@ sky130_fd_io__corner_bus_overlay tl(
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
 );
-sky130_fd_io__corner_bus_overlay tr(
+sky130_ef_io__corner_pad tr(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
@@ -299,7 +299,7 @@ sky130_fd_io__corner_bus_overlay tr(
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
 );
-sky130_fd_io__corner_bus_overlay bl(
+sky130_ef_io__corner_pad bl(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
@@ -311,7 +311,7 @@ sky130_fd_io__corner_bus_overlay bl(
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
 );
-sky130_fd_io__corner_bus_overlay br(
+sky130_ef_io__corner_pad br(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),

@@ -1,18 +1,40 @@
+#create_library_set -name ss_m40_lib\
+#   -timing\
+#    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ss_n40C_1v60.lib ./sram-pnr/sram_ss_m40.lib] 
+#create_library_set -name tt_25_lib\
+#   -timing\
+#    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__tt_025C_1v80.lib ./sram-pnr/sram_tt_25.lib]
+#create_library_set -name ff_150_lib\
+#   -timing\
+#    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ff_150C_1v95.lib ./sram-pnr/sram_ff_150.lib]
+#create_library_set -name ff_m40_lib\
+#   -timing\
+#    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ff_n40C_1v95.lib ./sram-pnr/sram_ss_m40.lib]
+#create_library_set -name ss_150_lib\
+#   -timing\
+#    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ss_150C_1v60.lib ./sram-pnr/sram_ss_150.lib] 
+
 create_library_set -name ss_m40_lib\
    -timing\
-    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ss_n40C_1v60.lib ./sram-pnr/sram_ss_m40.lib]
+    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ss_n40C_1v60.lib ./sram-pnr/sram_ss_m40.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_ss_n40C_1v60_1v65_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_ss_n40C_1v60_1v65_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_ss_n40C_1v60_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_ss_n40C_1v60_1v65_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_wrapped_ss_ss_n40C_1v60_1v65.lib]
+
 create_library_set -name tt_25_lib\
    -timing\
-    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__tt_025C_1v80.lib ./sram-pnr/sram_tt_25.lib]
+    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__tt_025C_1v80.lib ./sram-pnr/sram_tt_25.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_tt_025C_1v80_3v30_3v30.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_tt_025C_1v80_3v30_3v30.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_tt_025C_1v80_3v30.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_tt_025C_1v80_3v30_3v30.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_wrapped_tt_tt_025C_1v80_3v30.lib]
+
 create_library_set -name ff_150_lib\
    -timing\
-    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ff_150C_1v95.lib ./sram-pnr/sram_ff_150.lib]
+    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ff_150C_1v95.lib ./sram-pnr/sram_ff_150.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_ff_100C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_ff_100C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_ff_100C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_ff_100C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_wrapped_ff_ff_100C_1v95_5v50.lib]
+
 create_library_set -name ff_m40_lib\
    -timing\
-    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ff_n40C_1v95.lib ./sram-pnr/sram_ss_m40.lib]
+    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ff_n40C_1v95.lib ./sram-pnr/sram_ss_m40.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_ff_n40C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_ff_n40C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_ff_n40C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_ff_n40C_1v95_5v50_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_wrapped_ff_ff_n40C_1v95_5v50.lib]
+
 create_library_set -name ss_150_lib\
    -timing\
-    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ss_150C_1v60.lib ./sram-pnr/sram_ss_150.lib] 
+    [list /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/sky130_fd_sc_ms__ss_150C_1v60.lib ./sram-pnr/sram_ss_150.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_ss_100C_1v60_1v65_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_ss_100C_1v60_1v65_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_ss_100C_1v60_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_ss_100C_1v60_1v65_1v65.lib /pdks/google/open_pdks/sky130/custom/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_wrapped_ss_ss_100C_1v60_1v65.lib]
+
+
 create_timing_condition -name ff_150_cond\
    -library_sets [list ff_150_lib]
 create_timing_condition -name ss_m40_cond\
