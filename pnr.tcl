@@ -23,7 +23,7 @@ set_db design_bottom_routing_layer met1
 
 # shoot for 50% utilization
 #create_floorplan -stdcell_density_size {1.0 0.5 2 2 2 2}
-read_floorplan top_with_power.fp
+#read_floorplan top_with_power.fp
 
 # Ensure power pins are connected to power nets
 connect_global_net VPWR -type pg_pin -pin_base_name VPWR -all
