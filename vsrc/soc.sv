@@ -19,10 +19,12 @@ module SOC (
    logic [31:0] mem_rdata;
 
    logic [31:0] eoi32;
-   assign eoi = eoi32[15:0];
+   // this is made up to get connectivity
+   assign eoi = irq[15:0] & {16{mem_valid}} ;
 
    picorv32 #(
-	.ENABLE_IRQ (1)
+	.ENABLE_IRQ (1),
+	.MASKED_IRQ (32'hffff0000)
    ) CORE (
    	.clk(clk), 
    	.resetn(rstn),
