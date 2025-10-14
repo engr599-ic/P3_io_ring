@@ -71,8 +71,9 @@ add_well_taps -cell sky130_fd_sc_ms__tapvpwrvgnd_1 -cell_interval 60 -in_row_off
 
 set_db place_global_place_io_pins true
 
+write_floorplan floorplan.fp
+
 # Save a database
 write_db -common dbs/pnr_init.db
-
 
 
