@@ -60,10 +60,10 @@ foreach file $ALL_GDS {
 	}
 }
 set FILTERED_GDS [split $FILTERED_GDS]
-lappend FILTERED_GDS ./sram-pnr/sram.gds
+lappend FILTERED_GDS ./sram-pnr/sram.gds.gz
 
 
-write_stream out.gds \
+write_stream out.gds.gz \
     -map_file $PDK_DIR/libs/sky130_fd_pr_main/sky130_fd_pr_main.layermap \
     -lib_name DesignLib \
     -merge $FILTERED_GDS \
