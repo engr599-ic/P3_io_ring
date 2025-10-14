@@ -74,6 +74,6 @@ set_db place_global_place_io_pins true
 write_floorplan floorplan.fp
 
 # Save a database
-write_db -common dbs/pnr_init.db
+write_db -common dbs/floorplan.db
 
 
