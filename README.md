@@ -1,15 +1,14 @@
-# P2: Floorplanning
+# P3: IO Ring
 
 Version: 2025.0
 ---
 
-## Due Date:  09:59am, Thursday, October 2nd, 2025
-
+## Due Date:  09:59am, Thursday, October 23, 2025
 
 
 # Goal
 
-This project will walk you through the basics of setting up a floorplan for a digital IC design flow that includes both hard macros and standard cell logic.  It will also give you some exposure on the process of modifing an existing digital logic design to add more features. 
+This project will walk you through the basics of setting up an IO ring.  It will also give you some experience in dealing with multiple voltage domains.  
 
 # Setup
 
@@ -219,7 +218,34 @@ Once your happy with your floorplan, we suggest you save your floorplan.  Try Fi
 ### Finish the flow. 
 
 Now you can continue on with standard placement,  clock tree synthesis, routing, and signoff as per Project 1. 
-Most of this can be uncommented from the existing `pnr.tcl` script.  We recommend adding a `read_floorplan` command that loads the floorplan saved in the previous step.  
+Most of this can be uncommented from the existing `pnr.tcl` script.  We recommend adding a `read_floorplan` command that loads the floorplan saved in the previous step. 
+
+## Jack's Helpful Tips
+
+
+### IO Grid Snapping
+
+`create_floorplan -no_snap_to_grid`
+
+There is also an option in the GUI interface. 
+
+You might also look at "Bottom IO Pad Orientation"
+
+### Saving / Loading IO Files
+
+If you are intending to manually edit IO placement (which you should), we recommend saving / loading IO files vs. editing the floorplan. 
+
+To be continued. 
+
+
+### IO Filler Cells
+
+```
+ - sky130_ef_io__com_bus_slice_1um
+ - sky130_ef_io__com_bus_slice_5um
+ - sky130_ef_io__com_bus_slice_10um
+ - sky130_ef_io__com_bus_slice_20um
+```
 
 # Getting Help
 
