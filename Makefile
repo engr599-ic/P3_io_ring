@@ -6,6 +6,9 @@ setup:
 synth:
 	genus -batch -files synthesis.tcl
 
+floorplan: 
+	innovus -stylus -batch -files floorplan.tcl
+
 pnr:
 	innovus -stylus -batch -files pnr.tcl
 
