@@ -44,12 +44,14 @@ You will need to either customize the `floorplan.tcl` script, or to manually edi
 A (non-exhaustive) list of things that will need fixed: 
  - Corner cells are not placed correctly
  - The "PAD" section of the IO cell should face away from the core
+ - Add a power ring between the core and the IO cells for the stripes to connect properly.
+ - Each side of the IO ring should have the following IO: vccd_pad, vssd_pad, vddio_pad, vssio_pad.
  - You will need to connect all the IO cell's nets either with an `sroute` or using IO filler cells (see below)
 
 Remember you can restore an existing database with: 
 
 ```bash
-innovus -stylus -db ./dbs/pnr_init.db
+innovus -stylus -db ./dbs/floorplan.db
 ```
 
 You can save the floorplan with either the GUI or the CLI:
