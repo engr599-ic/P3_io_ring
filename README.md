@@ -51,7 +51,7 @@ A (non-exhaustive) list of things that will need fixed:
 Remember you can restore an existing database with: 
 
 ```bash
-innovus -stylus -db ./dbs/pnr_init.db
+innovus -stylus -db ./dbs/floorplan.db
 ```
 
 You can save the floorplan with either the GUI or the CLI:
