@@ -6,9 +6,6 @@ set HDL_FILES {
    ./vsrc/sram_simple.sv
    ./picorv32/picorv32.v
 }
-   #./vsrc/sky130_fd_io__top_gpiov2.pp.blackbox.v
-   #/pdks/google/open_pdks/sky130/custom/sky130_fd_io/verilog/sky130_ef_io__gpiov2_pad_wrapped.v
-   #/pdks/google/open_pdks/sky130/custom/sky130_fd_io/verilog/sky130_ef_io.v
 
 set MMMC_FILE ./mmmc.tcl
 
@@ -31,6 +28,8 @@ foreach file $ALL_LEFS {
 	if {![string match "*.magic.lef" $file] && \
         ![string match "*diode*" $file] && \
         ![string match "*tapmet1*" $file] && \
+        ![string match "*vccd*" $file] && \
+        ![string match "*vssd*" $file] && \
         ![string match "*sky130_fd_io__signal_5_sym_hv_local_5term*" $file] && \
         ![string match "*tapvgnd*" $file] \
         } {
@@ -39,6 +38,8 @@ foreach file $ALL_LEFS {
 }
 set FILTERED_LEFS [split $FILTERED_LEFS]
 lappend FILTERED_LEFS ./sram-pnr/sram.lef
+lappend FILTERED_LEFS ./lef/sky130_ef_io__vccd_hvc_pad.lef
+lappend FILTERED_LEFS ./lef/sky130_ef_io__vssd_hvc_pad.lef
 
 set_db lib_search_path $LIB_DIR
 
