@@ -130,6 +130,12 @@ Correctly placed IO Filler cells should look something like this:
 
 <img width="382" height="674" alt="image" src="https://github.com/user-attachments/assets/8e0a332a-7697-441d-9725-bd64661df99b" />
 
+## Core-to-IO Ring Spacing
+
+In the floorplanning menu, you can increase the space between the core and the IO ring with the following settings: 
+
+<img width="451" height="169" alt="image" src="https://github.com/user-attachments/assets/209da197-8582-4122-b446-5ed106efe1be" />
+
 # Your Turn
 
 Now it's your turn to run your own flow.  This time we're concerned with getting the `run_checks.sh` script to pass.  We're not so concerned about area or timing, so feel free to relax those to make things run faster.  

@@ -203,8 +203,6 @@ module gpio_power (
     inout vssio
 );
 
-logic vddc;
-
 //VDDIO
 genvar i;
 generate
@@ -213,11 +211,9 @@ generate
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
-                .VCCD(vccd),
                 .VSWITCH(vddio),
                 .VCCHIB(vddio),
                 .VSSA(vssa),
-                .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
             );
@@ -230,11 +226,9 @@ generate
             .VDDIO(vddio),
             .VDDIO_Q(vddio),
             .VDDA(vdda),
-            .VCCD(vccd),
             .VSWITCH(vddio),
             .VCCHIB(vddio),
             .VSSA(vssa),
-            .VSSD(vssd),
             .VSSIO_Q(vssio),
             .VSSIO(vssio)
         );
@@ -247,11 +241,9 @@ generate
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
-                .VCCD(vccd),
                 .VSWITCH(vddio),
                 .VCCHIB(vddio),
                 .VSSA(vssa),
-                .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
             );
@@ -264,11 +256,9 @@ generate
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
-                .VCCD(vccd),
                 .VSWITCH(vddio),
                 .VCCHIB(vddio),
                 .VSSA(vssa),
-                .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
             );
@@ -279,11 +269,9 @@ sky130_ef_io__corner_pad tl(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
-                .VCCD(vccd),
                 .VSWITCH(vddio),
                 .VCCHIB(vddio),
                 .VSSA(vssa),
-                .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
 );
@@ -291,11 +279,9 @@ sky130_ef_io__corner_pad tr(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
-                .VCCD(vccd),
                 .VSWITCH(vddio),
                 .VCCHIB(vddio),
                 .VSSA(vssa),
-                .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
 );
@@ -303,11 +289,9 @@ sky130_ef_io__corner_pad bl(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
-                .VCCD(vccd),
                 .VSWITCH(vddio),
                 .VCCHIB(vddio),
                 .VSSA(vssa),
-                .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
 );
@@ -315,11 +299,9 @@ sky130_ef_io__corner_pad br(
                 .VDDIO(vddio),
                 .VDDIO_Q(vddio),
                 .VDDA(vdda),
-                .VCCD(vccd),
                 .VSWITCH(vddio),
                 .VCCHIB(vddio),
                 .VSSA(vssa),
-                .VSSD(vssd),
                 .VSSIO_Q(vssio),
                 .VSSIO(vssio)
 );
