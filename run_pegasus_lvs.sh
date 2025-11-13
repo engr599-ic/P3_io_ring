@@ -6,6 +6,8 @@ set -e
 NUM_CPUS=4
 
 STDCELL_HOME=/l/skywater-pdk/libraries/sky130_fd_sc_ms/latest
+IO_CELL_HOME=/l/open_pdks/sky130/custom/sky130_fd_io/
+OTHER_IO_DIR=/l/skywater-pdk/libraries/sky130_fd_io/latest/cells/
 
 # Get the absolute path of the script
 SCRIPT_PATH="$(readlink -f "$0")"
@@ -44,6 +46,8 @@ echo ".OPTION SCALE 1e-6" >> ${INCLUDE_FILE}
 for CDL in ${STDCELL_HOME}/cells/*/*.cdl ; do
     echo ".include \"${CDL}\" " >> ${INCLUDE_FILE}
 done
+echo ".include \"${IO_CELL_HOME}/cdl/sky130_ef_io.cdl\" " >> ${INCLUDE_FILE}
+#echo ".include \"${WORK_DIR}/../cdl/sky130_fd_io.cdl\" " >> ${INCLUDE_FILE}
 
 echo "Generating MYRULES File"
 echo "" > ${MYRULES_FILE}
@@ -113,6 +117,8 @@ EOF
 rm -rf mismatch
 
 chmod +x run.sh
+
+exit 1
 
 ./run.sh
 
