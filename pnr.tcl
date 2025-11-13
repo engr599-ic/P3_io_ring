@@ -27,8 +27,11 @@ add_fillers -base_cells {sky130_fd_sc_ms__fill_8 sky130_fd_sc_ms__fill_4 sky130_
 
 write_db -common dbs/signoff.db
 
+connect_global_net vddio -type pg_pin -pin_base_name VDDIO -inst_base_name * -hinst {}
+connect_global_net vdda -type pg_pin -pin_base_name VDDA -inst_base_name * -hinst {}
+
 # Write out a post PnR netlist for simulation and LVS
-write_netlist -include_pg -omit_floating_ports -update_tie_connections post_pnr_lvs.vg
+write_netlist -include_pg -omit_floating_ports -update_tie_connections post_pnr_lvs.vg -exclude_insts_of_cells sky130_ef_io__corner_cell
 write_netlist -remove_power_ground post_pnr_sim.vg
 
 # Write a DRC report
