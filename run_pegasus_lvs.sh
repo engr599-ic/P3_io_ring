@@ -29,6 +29,11 @@ if ! [ -e "$NETLIST_FILE" ]; then
   echo "ERROR:  ${NETLIST_FILE} does not exist."
   exit 1
 fi
+SRAM_NETLIST_FILE=${SCRIPT_DIR}/sram-pnr/post_pnr_lvs.vg
+if ! [ -e "$SRAM_NETLIST_FILE" ]; then
+  echo "ERROR:  ${SRAM_NETLIST_FILE} does not exist."
+  exit 1
+fi
 
 mkdir -p ${WORK_DIR}
 pushd ${WORK_DIR}
@@ -83,8 +88,9 @@ echo "results_db -erc \"${ERC_REPORT_FILE}\" -ascii; " >> ${CTRL_FILE}
 echo "abort_on_layout_error yes; " >> ${CTRL_FILE}
 echo "layout_format gdsii; " >> ${CTRL_FILE}
 echo "layout_path \"${GDS_PATH}\";" >> $CTRL_FILE
-echo "schematic_path \"${NETLIST_FILE}\" verilog; " >> ${CTRL_FILE}
 echo "schematic_path \"${INCLUDE_FILE}\" cdl; " >> ${CTRL_FILE}
+echo "schematic_path \"${SRAM_NETLIST_FILE}\" verilog; " >> ${CTRL_FILE}
+echo "schematic_path \"${NETLIST_FILE}\" verilog; " >> ${CTRL_FILE}
 
 echo "Generating run script"
 cat > run.sh << EOF
