@@ -13,7 +13,7 @@ set PDK_DIR /l/skywater-pdk/libraries/sky130_fd_pr/latest/
 set STDCELL_DIR /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/cells/
 set IO_DIR /l/open_pdks/sky130/custom/sky130_fd_io/
 set LIB_DIR /l/skywater-pdk/libraries/sky130_fd_sc_ms/latest/timing/
-set TECH_LEF /l/skywater-pdk/libraries/sky130_fd_pr/latest/tech/sky130_fd_pr.tlef
+set TECH_LEF ./sky130_fd_pr.tlef
 
 set STDCELL_LEFS [glob -nocomplain -type f $STDCELL_DIR/**/*.lef]
 set IO_LEFS [glob -nocomplain -type f $IO_DIR/lef/*.lef]
