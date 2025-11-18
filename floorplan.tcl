@@ -15,12 +15,12 @@ create_net -physical -name VDDA
 #VDDIO
 #VSSIO
 create_net -physical -name VSWITCH
-create_net -physical -name VSSA
+create_net -physical -name VSSA -ground
 #VSSD is VGND
 create_net -physical -name AMUXBUS_B
 create_net -physical -name AMUXBUS_A
-create_net -physical -name VSSIO_Q
-create_net -physical -name VDDIO_Q
+#create_net -physical -name VSSIO_Q
+#create_net -physical -name VDDIO_Q
 
 # Enable OCV (On Chip Variation)
 # This takes into account process variation
@@ -54,11 +54,11 @@ connect_global_net VGND -type pg_pin -pin_base_name VSSD -all
 connect_global_net VCCHIB -pin_base_name VCCHIB -all
 connect_global_net VDDA -pin_base_name VDDA -all
 connect_global_net VSWITCH -pin_base_name VSWITCH -all
-connect_global_net VSSA -pin_base_name VSSA -all
+connect_global_net VSSA -type pg_pin -pin_base_name VSSA -inst_base_name *
 connect_global_net AMUXBUS_B -pin_base_name AMUXBUS_B -all
 connect_global_net AMUXBUS_A -pin_base_name AMUXBUS_A -all
-connect_global_net VSSIO_Q -pin_base_name VSSIO_Q -all
-connect_global_net VDDIO_Q -pin_base_name VDDIO_Q -all
+connect_global_net vssio -type pg_pin -pin_base_name VSSIO_Q -inst_base_name *
+connect_global_net vddio -type pg_pin -pin_base_name VDDIO_Q -inst_base_name *
 
 # better LEFs
 update_lef_macro ./lef/sky130_ef_io__vddio_hvc_pad.lef
