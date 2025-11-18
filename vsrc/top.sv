@@ -18,6 +18,7 @@ logic [15:0] eoi;
 ////vccd
 logic vddio; // digital io supply
 logic vssio;  // digital io ground
+logic amuxbus_b, amuxbus_a; 
 
 SOC soc0 (
    .clk,
@@ -31,14 +32,18 @@ gpio_input gpio_clk0 (
     .PAD(CLK_PAD),
     .FROM_PAD(clk),
     .vddio,
-    .vssio
+    .vssio,
+    .amuxbus_b,
+    .amuxbus_a
   );
 
 gpio_input gpio_rstn0 (
     .PAD(RSTN_PAD),
     .FROM_PAD(rstn),
     .vddio,
-    .vssio
+    .vssio,
+    .amuxbus_b,
+    .amuxbus_a
     );
   
 genvar i;
@@ -48,20 +53,26 @@ generate
             .PAD(IRQ_PAD[i]),
             .FROM_PAD(irq[i]),
             .vddio,
-            .vssio
+            .vssio,
+            .amuxbus_b,
+            .amuxbus_a
         );
 
         gpio_output gpio_eoi0 (
             .PAD(EOI_PAD[i]),
             .TO_PAD(eoi[i]),
             .vddio,
-            .vssio
+            .vssio,
+            .amuxbus_b,
+            .amuxbus_a
         );
     end
 
 gpio_power gpio_pwr0(
-    vddio,
-    vssio
+    .vddio,
+    .vssio,
+    .amuxbus_b,
+    .amuxbus_a
     );
 
 
@@ -74,7 +85,9 @@ module gpio_input (
     inout PAD,
     output FROM_PAD,
     inout vddio,
-    inout vssio
+    inout vssio,
+    inout amuxbus_b,
+    inout amuxbus_a 
 );
 
 
@@ -111,8 +124,8 @@ module gpio_input (
 
         .ENABLE_VSWITCH_H(1'h0), //???
         
-        .AMUXBUS_A(),
-        .AMUXBUS_B(),
+        .AMUXBUS_A(amuxbus_a),
+        .AMUXBUS_B(amuxbus_b),
 
         .TIE_HI_ESD(vddio),
         .TIE_LO_ESD(vssio),
@@ -129,7 +142,9 @@ module gpio_output (
     inout PAD,
     input TO_PAD,
     inout vddio,
-    inout vssio
+    inout vssio,
+    inout amuxbus_b,
+    inout amuxbus_a 
 );
 
     //per this figure: 
@@ -164,8 +179,8 @@ module gpio_output (
 
         .ENABLE_VSWITCH_H(1'h0), //???
         
-        .AMUXBUS_A(),
-        .AMUXBUS_B(),
+        .AMUXBUS_A(amuxbus_a),
+        .AMUXBUS_B(amuxbus_b),
 
         .TIE_HI_ESD(vddio),
         .TIE_LO_ESD(vssio),
@@ -180,7 +195,9 @@ endmodule
 
 module gpio_power (
     inout vddio,
-    inout vssio
+    inout vssio,
+    inout amuxbus_b,
+    inout amuxbus_a 
 );
 
 //VDDIO
@@ -189,7 +206,9 @@ generate
     for (i = 0; i < 4; i++) begin : vddio_pad
         sky130_ef_io__vddio_hvc_pad vddio_pad(
                 .VSSIO(vssio),
-                .VDDIO(vddio)
+                .VDDIO(vddio),
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
             );
     end
 endgenerate
@@ -198,7 +217,9 @@ generate
     for (i = 0; i < 4; i++) begin : vssio_pad 
         sky130_ef_io__vssio_hvc_pad vssio_pad(
                 .VSSIO(vssio),
-                .VDDIO(vddio)
+                .VDDIO(vddio),
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
         );
     end
 endgenerate
@@ -206,6 +227,10 @@ endgenerate
 generate
     for (i = 0; i < 4; i++) begin : vccd_pad 
         sky130_ef_io__vccd_hvc_pad vccd_pad(
+                .VSSIO(vssio),
+                .VDDIO(vddio),
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
             );
     end
 endgenerate
@@ -213,6 +238,10 @@ endgenerate
 generate
     for (i = 0; i < 4; i++) begin : vssd_pad 
         sky130_ef_io__vssd_hvc_pad vssd_pad(
+                .VSSIO(vssio),
+                .VDDIO(vddio),
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
             );
     end
 endgenerate
