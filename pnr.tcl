@@ -1,6 +1,6 @@
 
 set_multi_cpu_usage -remote_host 4 -local_cpu 4
-read_db dbs/floorplan.db/
+read_db dbs/floorplan.3.db/
 
 # Place the standard cells
 place_opt_design
@@ -34,9 +34,10 @@ connect_global_net vddio -type pg_pin -pin_base_name VDDIO -inst_base_name * -ov
 
 route_special -connect {block_pin pad_pin pad_ring core_pin floating_stripe} -layer_change_range { li1(1) rdl(7) } -block_pin_target {nearest_target} -pad_pin_port_connect {all_port one_geom} -pad_pin_target {nearest_target} -core_pin_target {first_after_row_end} -floating_stripe_target {block_ring pad_ring ring stripe ring_pin block_pin followpin} -allow_jogging 1 -crossover_via_layer_range { li1(1) rdl(7) } -nets { vddio } -allow_layer_change 1 -block_pin use_lef -target_via_layer_range { li1(1) rdl(7) }
 
+add_io_fillers -cells sky130_ef_io__com_bus_slice_1um -prefix FILLER  -fill_any_gap
 
 # Write out a post PnR netlist for simulation and LVS
-write_netlist -include_pg -omit_floating_ports -update_tie_connections -exclude_leaf_cells -exclude_insts_of_cells sky130_ef_io__corner_cell post_pnr_lvs.vg 
+write_netlist -include_pg -omit_floating_ports -update_tie_connections -exclude_leaf_cells -exclude_insts_of_cells sky130_ef_io__corner_pad post_pnr_lvs.vg 
 write_netlist -remove_power_ground post_pnr_sim.vg
 
 # Write a DRC report
