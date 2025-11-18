@@ -33,7 +33,8 @@ set_db design_bottom_routing_layer met1
 
 # shoot for 50% utilization
 #create_floorplan -stdcell_density_size {1.0 0.5 2 2 2 2}
-read_floorplan thurber.fp
+read_floorplan top.fp
+read_io_file top.save.io
 
 
 # Ensure power pins are connected to power nets

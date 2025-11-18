@@ -15,7 +15,7 @@ pnr:
 run_checks:
 	./run_checks.sh
 
-all: synth pnr run_checks
+all: synth floorplan pnr run_checks
 
 clean:
 	rm -rf dbs* fv

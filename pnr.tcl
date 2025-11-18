@@ -1,6 +1,6 @@
 
 set_multi_cpu_usage -remote_host 4 -local_cpu 4
-read_db dbs/floorplan.3.db/
+read_db dbs/floorplan.db/
 
 # Place the standard cells
 place_opt_design
