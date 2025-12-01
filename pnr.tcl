@@ -1,6 +1,12 @@
 
-set_multi_cpu_usage -remote_host 4 -local_cpu 4
-read_db dbs/floorplan.3.db/
+set_multi_cpu_usage -remote_host 12 -local_cpu 12 
+read_db dbs/floorplan.5.db/
+
+#don't route the amuxbus signals
+set_ccopt_property -net_type  amuxbus_a route_type none
+set_route_attributes -nets amuxbus_a -skip_routing true
+set_ccopt_property -net_type  amuxbus_b route_type none
+set_route_attributes -nets amuxbus_b -skip_routing true
 
 # Place the standard cells
 place_opt_design
@@ -12,7 +18,8 @@ clock_opt_design
 write_db -common dbs/ccopt.db
 
 # Route the signal nets
-route_opt_design
+#route_opt_design
+route_design -global_detail
 time_design -post_route
 time_design -post_route -hold
 opt_design -post_route
