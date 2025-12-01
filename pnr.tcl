@@ -1,6 +1,5 @@
-
-set_multi_cpu_usage -remote_host 12 -local_cpu 12 
-read_db dbs/floorplan.5.db/
+set_multi_cpu_usage -remote_host 4 -local_cpu 4
+read_db dbs/floorplan.db/
 
 #don't route the amuxbus signals
 set_ccopt_property -net_type  amuxbus_a route_type none
