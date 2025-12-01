@@ -40,7 +40,6 @@ pushd ${WORK_DIR}
 
 CTRL_FILE=${WORK_DIR}/pegasuslvsctl
 INCLUDE_FILE=${WORK_DIR}/include.cdl
-MYRULES_FILE=${WORK_DIR}/myrules.pvl
 
 ERC_REPORT_FILE=${WORK_DIR}/${TOP_MODULE}.erc_errors.ascii
 SUM_FILE=${WORK_DIR}/${TOP_MODULE}.sum
@@ -53,13 +52,6 @@ for CDL in ${STDCELL_HOME}/cells/*/*.cdl ; do
 done
 echo ".include \"${IO_CELL_HOME}/cdl/sky130_ef_io.cdl\" " >> ${INCLUDE_FILE}
 #echo ".include \"${WORK_DIR}/../cdl/sky130_fd_io.cdl\" " >> ${INCLUDE_FILE}
-
-echo "Generating MYRULES File"
-echo "" > ${MYRULES_FILE}
-echo "lvs_write_netlist -layout netlist.lay " >> ${MYRULES_FILE}
-echo "lvs_write_netlist -source netlist.sch " >> ${MYRULES_FILE}
-echo "lvs_write_netlist_reduced -layout netlist.reduced.lay " >> ${MYRULES_FILE}
-echo "lvs_write_netlist_reduced -source netlist.reduced.sch " >> ${MYRULES_FILE}
 
 echo "Generating Control File"
 echo "" > $CTRL_FILE
@@ -78,10 +70,12 @@ echo "lvs_power_name \"VPWR\"; " >> ${CTRL_FILE}
 echo "lvs_ground_name \"VGND\"; " >> ${CTRL_FILE}
 echo "lvs_find_shorts no; " >> ${CTRL_FILE}
 echo "sconnect_upper_shape_count no; " >> ${CTRL_FILE}
-echo "lvs_report_file \"${TOP_MODULES}.rep\"; " >> ${CTRL_FILE}
+echo "lvs_report_file \"${TOP_MODULE}.rep\"; " >> ${CTRL_FILE}
 echo "lvs_report_max 50 -mismatched_net_limit 100; " >> ${CTRL_FILE}
 echo "lvs_run_erc_checks yes; " >> ${CTRL_FILE}
-echo "lvs_report_opt -none; " >> ${CTRL_FILE}
+#surpress extra pins from IOs
+#https://support.cadence.com/apex/ArticleAttachmentPortal?id=a1Od0000007MaCBEA0&pageName=ArticleContent
+echo "lvs_report_opt LPI SPI; "  >> ${CTRL_FILE}
 echo "report_summary -erc \"${TOP_MODULE}.sum\" -replace; " >> ${CTRL_FILE}
 echo "max_results -erc 1000; " >> ${CTRL_FILE}
 echo "results_db -erc \"${ERC_REPORT_FILE}\" -ascii; " >> ${CTRL_FILE}
@@ -91,6 +85,17 @@ echo "layout_path \"${GDS_PATH}\";" >> $CTRL_FILE
 echo "schematic_path \"${INCLUDE_FILE}\" cdl; " >> ${CTRL_FILE}
 echo "schematic_path \"${SRAM_NETLIST_FILE}\" verilog; " >> ${CTRL_FILE}
 echo "schematic_path \"${NETLIST_FILE}\" verilog; " >> ${CTRL_FILE}
+#Grey-box the IO cells so LVS can still see the IO ring signals
+echo "lvs_black_box sky130_ef_io__vssd_hvc_pad -gray -source_layout; " >> ${CTRL_FILE}
+echo "lvs_black_box sky130_ef_io__vccd_hvc_pad -gray -source_layout; " >> ${CTRL_FILE}
+echo "lvs_black_box sky130_ef_io__vddio_hvc_pad -gray -source_layout; " >> ${CTRL_FILE}
+echo "lvs_black_box sky130_ef_io__vssio_hvc_pad -gray -source_layout; " >> ${CTRL_FILE}
+echo "lvs_black_box sky130_ef_io__gpiov2_pad_wrapped -gray -source_layout; " >> ${CTRL_FILE}
+#write out results from partial setps for debugging
+echo "lvs_write_netlist -layout netlist.lay " >> ${CTRL_FILE}
+echo "lvs_write_netlist -source netlist.sch " >> ${CTRL_FILE}
+echo "lvs_write_netlist_reduced -layout netlist.reduced.lay " >> ${CTRL_FILE}
+echo "lvs_write_netlist_reduced -source netlist.reduced.sch " >> ${CTRL_FILE}
 
 echo "Generating run script"
 cat > run.sh << EOF
@@ -115,16 +120,13 @@ cat > run.sh << EOF
         -ui_data \\
         -gdb_data \\
         -dp ${NUM_CPUS}  \\
-        ${MYRULES_FILE} \\
-        /l/sky130_release_0.0.1/Sky130_LVS/Sky130_rev_0.0_0.1.lvs.pvl
+        /l/sky130_release_0.1.0/Sky130_LVS/sky130.lvs.v0.0_1.1.pvl
 EOF
 
 #make sure old mismatch file doesn't exist
 rm -rf mismatch
 
 chmod +x run.sh
-
-exit 1
 
 ./run.sh
 
