@@ -13,13 +13,12 @@ logic [15:0] irq;
 logic [15:0] eoi;
 
 // Power/Ground nets treated as signal lines
-// FIX in Physical Design
+// some of these are fixed in Physical Design
+//logic vcchib;  // hibernate vcc (?)
+////vccd
 logic vddio; // digital io supply
-logic vdda; //analog io supply (tie to VDDIO)
-logic vswitch; //charge pump supply (tie to VDDA/VDDIO?)
 logic vssio;  // digital io ground
-
-
+logic amuxbus_b, amuxbus_a; 
 
 SOC soc0 (
    .clk,
@@ -33,18 +32,18 @@ gpio_input gpio_clk0 (
     .PAD(CLK_PAD),
     .FROM_PAD(clk),
     .vddio,
-    .vdda,
-    .vswitch,
-    .vssio
-    );
+    .vssio,
+    .amuxbus_b,
+    .amuxbus_a
+  );
 
 gpio_input gpio_rstn0 (
     .PAD(RSTN_PAD),
     .FROM_PAD(rstn),
     .vddio,
-    .vdda,
-    .vswitch,
-    .vssio
+    .vssio,
+    .amuxbus_b,
+    .amuxbus_a
     );
   
 genvar i;
@@ -54,26 +53,26 @@ generate
             .PAD(IRQ_PAD[i]),
             .FROM_PAD(irq[i]),
             .vddio,
-            .vdda,
-            .vswitch,
-            .vssio
+            .vssio,
+            .amuxbus_b,
+            .amuxbus_a
         );
 
         gpio_output gpio_eoi0 (
             .PAD(EOI_PAD[i]),
             .TO_PAD(eoi[i]),
             .vddio,
-            .vdda,
-            .vswitch,
-            .vssio
+            .vssio,
+            .amuxbus_b,
+            .amuxbus_a
         );
     end
 
 gpio_power gpio_pwr0(
-    vddio,
-    vdda,
-    vswitch, 
-    vssio
+    .vddio,
+    .vssio,
+    .amuxbus_b,
+    .amuxbus_a
     );
 
 
@@ -86,10 +85,9 @@ module gpio_input (
     inout PAD,
     output FROM_PAD,
     inout vddio,
-    inout vdda,
-    inout vswitch,
-    inout vssio
-
+    inout vssio,
+    inout amuxbus_b,
+    inout amuxbus_a 
 );
 
 
@@ -118,16 +116,16 @@ module gpio_input (
         .IB_MODE_SEL(1'b0),
         .ENABLE_VDDIO(1'b1),
 
-        .ENABLE_VDDA_H(vdda), // enable vdd hold 
+        .ENABLE_VDDA_H(1'h0), // enable vdd hold 
 
         .ANALOG_EN(1'b0),
         .ANALOG_SEL(1'b0),
         .ANALOG_POL(1'b0),
 
-        .ENABLE_VSWITCH_H(vswitch), //???
+        .ENABLE_VSWITCH_H(1'h0), //???
         
-        .AMUXBUS_A(),
-        .AMUXBUS_B(),
+        .AMUXBUS_A(amuxbus_a),
+        .AMUXBUS_B(amuxbus_b),
 
         .TIE_HI_ESD(vddio),
         .TIE_LO_ESD(vssio),
@@ -144,10 +142,9 @@ module gpio_output (
     inout PAD,
     input TO_PAD,
     inout vddio,
-    inout vdda,
-    inout vswitch,
-    inout vssio
-
+    inout vssio,
+    inout amuxbus_b,
+    inout amuxbus_a 
 );
 
     //per this figure: 
@@ -174,16 +171,16 @@ module gpio_output (
         .IB_MODE_SEL(1'b0),
         .ENABLE_VDDIO(1'b1),
 
-        .ENABLE_VDDA_H(vdda), // enable vdd hold 
+        .ENABLE_VDDA_H(1'h0), // enable vdd hold 
 
         .ANALOG_EN(1'b0),
         .ANALOG_SEL(1'b0),
         .ANALOG_POL(1'b0),
 
-        .ENABLE_VSWITCH_H(vswitch), //???
+        .ENABLE_VSWITCH_H(1'h0), //???
         
-        .AMUXBUS_A(),
-        .AMUXBUS_B(),
+        .AMUXBUS_A(amuxbus_a),
+        .AMUXBUS_B(amuxbus_b),
 
         .TIE_HI_ESD(vddio),
         .TIE_LO_ESD(vssio),
@@ -198,9 +195,9 @@ endmodule
 
 module gpio_power (
     inout vddio,
-    inout vdda,
-    inout vswitch, 
-    inout vssio
+    inout vssio,
+    inout amuxbus_b,
+    inout amuxbus_a 
 );
 
 //VDDIO
@@ -208,14 +205,10 @@ genvar i;
 generate
     for (i = 0; i < 4; i++) begin : vddio_pad
         sky130_ef_io__vddio_hvc_pad vddio_pad(
+                .VSSIO(vssio),
                 .VDDIO(vddio),
-                .VDDIO_Q(vddio),
-                .VDDA(vdda),
-                .VSWITCH(vddio),
-                .VCCHIB(vddio),
-                .VSSA(vssa),
-                .VSSIO_Q(vssio),
-                .VSSIO(vssio)
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
             );
     end
 endgenerate
@@ -223,14 +216,10 @@ endgenerate
 generate
     for (i = 0; i < 4; i++) begin : vssio_pad 
         sky130_ef_io__vssio_hvc_pad vssio_pad(
-            .VDDIO(vddio),
-            .VDDIO_Q(vddio),
-            .VDDA(vdda),
-            .VSWITCH(vddio),
-            .VCCHIB(vddio),
-            .VSSA(vssa),
-            .VSSIO_Q(vssio),
-            .VSSIO(vssio)
+                .VSSIO(vssio),
+                .VDDIO(vddio),
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
         );
     end
 endgenerate
@@ -238,14 +227,10 @@ endgenerate
 generate
     for (i = 0; i < 4; i++) begin : vccd_pad 
         sky130_ef_io__vccd_hvc_pad vccd_pad(
+                .VSSIO(vssio),
                 .VDDIO(vddio),
-                .VDDIO_Q(vddio),
-                .VDDA(vdda),
-                .VSWITCH(vddio),
-                .VCCHIB(vddio),
-                .VSSA(vssa),
-                .VSSIO_Q(vssio),
-                .VSSIO(vssio)
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
             );
     end
 endgenerate
@@ -253,58 +238,18 @@ endgenerate
 generate
     for (i = 0; i < 4; i++) begin : vssd_pad 
         sky130_ef_io__vssd_hvc_pad vssd_pad(
+                .VSSIO(vssio),
                 .VDDIO(vddio),
-                .VDDIO_Q(vddio),
-                .VDDA(vdda),
-                .VSWITCH(vddio),
-                .VCCHIB(vddio),
-                .VSSA(vssa),
-                .VSSIO_Q(vssio),
-                .VSSIO(vssio)
+                .AMUXBUS_A(amuxbus_a),
+                .AMUXBUS_B(amuxbus_b)
             );
     end
 endgenerate
 
-sky130_ef_io__corner_pad tl(
-                .VDDIO(vddio),
-                .VDDIO_Q(vddio),
-                .VDDA(vdda),
-                .VSWITCH(vddio),
-                .VCCHIB(vddio),
-                .VSSA(vssa),
-                .VSSIO_Q(vssio),
-                .VSSIO(vssio)
-);
-sky130_ef_io__corner_pad tr(
-                .VDDIO(vddio),
-                .VDDIO_Q(vddio),
-                .VDDA(vdda),
-                .VSWITCH(vddio),
-                .VCCHIB(vddio),
-                .VSSA(vssa),
-                .VSSIO_Q(vssio),
-                .VSSIO(vssio)
-);
-sky130_ef_io__corner_pad bl(
-                .VDDIO(vddio),
-                .VDDIO_Q(vddio),
-                .VDDA(vdda),
-                .VSWITCH(vddio),
-                .VCCHIB(vddio),
-                .VSSA(vssa),
-                .VSSIO_Q(vssio),
-                .VSSIO(vssio)
-);
-sky130_ef_io__corner_pad br(
-                .VDDIO(vddio),
-                .VDDIO_Q(vddio),
-                .VDDA(vdda),
-                .VSWITCH(vddio),
-                .VCCHIB(vddio),
-                .VSSA(vssa),
-                .VSSIO_Q(vssio),
-                .VSSIO(vssio)
-);
+sky130_ef_io__corner_pad tl();
+sky130_ef_io__corner_pad tr();
+sky130_ef_io__corner_pad bl();
+sky130_ef_io__corner_pad br();
 
 endmodule
 
