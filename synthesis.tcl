@@ -40,6 +40,7 @@ set FILTERED_LEFS [split $FILTERED_LEFS]
 lappend FILTERED_LEFS ./sram-pnr/sram.lef
 lappend FILTERED_LEFS ./lef/sky130_ef_io__vccd_hvc_pad.lef
 lappend FILTERED_LEFS ./lef/sky130_ef_io__vssd_hvc_pad.lef
+lappend FILTERED_LEFS ./lef/sky130_ef_io__vddio_hvc_pad.lef
 
 set_db lib_search_path $LIB_DIR
 
