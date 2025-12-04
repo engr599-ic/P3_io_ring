@@ -2,6 +2,10 @@
 set_multi_cpu_usage -remote_host 4 -local_cpu 4
 read_db dbs/floorplan.db/
 
+#don't route the amuxbus signals
+set_route_attributes -nets amuxbus_a -skip_routing true
+set_route_attributes -nets amuxbus_b -skip_routing true
+
 # Place the standard cells
 place_opt_design
 add_tieoffs
